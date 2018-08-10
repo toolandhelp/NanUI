@@ -1,0 +1,14 @@
+﻿::-webkit-scrollbar{width:20px;height:20px;cursor:pointer;}
+::-webkit-scrollbar-track,::-webkit-scrollbar-thumb{border-radius:999px;border:5px solid transparent;cursor:pointer;}
+::-webkit-scrollbar-track{box-shadow:1px 1px 5px rgba(0,0,0,.2) inset;cursor:pointer;}
+::-webkit-scrollbar-thumb{min-height:20px;background-clip:content-box;box-shadow:0 0 0 5px rgba(0,0,0,.2) inset;cursor:pointer;}
+::-webkit-scrollbar-corner{background:transparent;cursor:pointer;}
+
+#reg{height:660px;overflow-y:scroll;}
+#reg > div{width:100%;}
+#reg > div > h3{color:#467FD3;font-size:15px;font-weight:600;height:40px;line-height:40px;cursor:default;border-bottom:1px solid #467FD3;text-indent:30px;}
+
+#reg > .layui-form-item{width:85%;margin:10px auto;}
+#reg > .layui-form-item > .layui-btn{width:85%;height:30px;line-height:30px;background:#5FB878;}
+#reg > .layui-form-item .layui-input-block .server{color:#467FD3;cursor:pointer;}
+#reg > .layui-form-item .layui-input-block .server:hover{text-decoration:underline;color:rgb(86,163,228)}

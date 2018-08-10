@@ -1,0 +1,64 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using GSQ.CrawlerSYS.DAL;
+using GSQ.CrawlerSYS.Model;
+
+namespace GSQ.CrawlerSYS.BLL
+{
+   public  class BLL_User
+    {
+        #region dbContext
+        public DbHelperEfSql<t_User> dbContext { get; set; }
+        public BLL_User()
+        {
+            dbContext = new DbHelperEfSql<t_User>();
+        }
+        #endregion
+        #region  查询 Search Entity
+
+        ///// <summary>
+        ///// 根据账号获取单条数据
+        ///// </summary>
+        ///// <param name="sAccount"></param>
+        ///// <returns></returns>
+        //public t_User GetObjectByAccount(string sAccount)
+        //{
+        //    return dbContext.SearchBySingle(c => c.Account == sAccount);
+        //}
+
+        /// <summary>
+        /// 查询所有用户
+        /// </summary>
+        /// <returns></returns>
+        public IList<t_User> GetListByAll()
+        {
+            return dbContext.SearchByAll();
+        }
+
+        /// <summary>
+        /// 根据用户ID获取
+        /// </summary>
+        /// <param name="gid"></param>
+        /// <returns></returns>
+        public t_User GetObjectById(Guid gid)
+        {
+            return dbContext.SearchBySingle(c => c.Id == gid);
+        }
+
+        ///// <summary>
+        ///// 登陆用户
+        ///// </summary>
+        ///// <param name="sUserName"></param>
+        ///// <param name="password"></param>
+        ///// <returns></returns>
+        //public t_User LoginUsers(string sUserName, string password)
+        //{
+        //    return dbContext.SearchBySingle(c => c.Account == sUserName && c.Password == password);
+        //}
+
+
+        #endregion
+    }
+}

@@ -1,0 +1,421 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>欢迎使用 - 主界面</title>
+    <link href="/wwwroot/CSS/Base/Base.css" rel="stylesheet" />
+    <link href="/wwwroot/CSS/Main.css" rel="stylesheet" />
+    <link href="/wwwroot/Lib/Layui/css/layui.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="title max">
+        <div class="left">
+            <label>欢迎使用数据处理系统</label>
+        </div>
+        <div class="right">
+            <span onclick="minForm()"><i class="icon icon-min-btn"></i></span>
+            <!--<span id="maxForm"><i class="icon icon-max-btn"></i></span>-->
+            <!--<span id="normalForm" style="display:none"><i class="icon icon-normal-btn"></i></span>-->
+            <span onclick="closeForm()"><i class="icon icon-close-btn"></i></span>
+        </div>
+    </div>
+    <div style="width:100%;height:35px"></div>
+    <div id="main" class="max">
+        <div class="tool max">
+            <ul class="layui-nav">
+                <li class="layui-nav-item layui-this">千位管理</li>
+                <li class="layui-nav-item">百位管理</li>
+                <li class="layui-nav-item">十位管理</li>
+                <li class="layui-nav-item">个位管理</li>
+                <li class="layui-nav-item">球五管理</li>
+            </ul>
+        </div>
+        <div class="max content">
+            <div class="left" id="contetnLeft">
+                <button class="layui-btn" id="btnAdd">新增</button>
+                <button class="layui-btn" id="btnExport">导出</button>
+                <button class="layui-btn" id="btnClear">清空数据表格</button>
+                <div id="table"></div>
+            </div>
+            <div class="right">
+                <div class="top max">
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">模板设置</label>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">千位</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="title" id="input1" placeholder="请输入千位排序" autocomplete="off" maxlength="10" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">百位</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="title" id="input2" placeholder="请输入百位排序" autocomplete="off" maxlength="10" class="layui-input">
+
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">十位</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="title" id="input3" placeholder="请输入十位排序" autocomplete="off" maxlength="10" class="layui-input">
+
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">个位</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="title" id="input4" placeholder="请输入个位排序" autocomplete="off" maxlength="10" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">球五</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="title" id="input5" placeholder="请输入球五排序" autocomplete="off" maxlength="10" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item" style="text-align:center; position: relative;left: 24px;">
+                        <button class="layui-btn" id="btnClearModel">清空</button>
+                        <button class="layui-btn" id="btnEditModel">编辑</button>
+                        <button class="layui-btn" id="btnSaveModel">保存</button>
+                    </div>
+                </div>
+                <div class="precentList">
+                    <div>千位：<span class="precent1">10%</span></div>
+                    <div>百位：<span class="precent2">10%</span></div>
+                    <div>十位：<span class="precent3">10%</span></div>
+                    <div>个位：<span class="precent4">10%</span></div>
+                    <div>球五：<span class="precent5">10%</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-footer">
+            <!-- 底部固定区域 -->
+            © 云创天成 - QQ1169204969 @技术支持
+        </div>
+    </div>
+    <script type="text/javascript" src="/wwwroot/Lib/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="/wwwroot/Lib/Layui/layui.js"></script>
+    <script type="text/javascript" src="/wwwroot/Scripts/Main.js"></script>
+    <script>
+        var type = 1;
+        $(function () {
+            $("#input1").val(localStorage.input1);
+            $("#input2").val(localStorage.input2);
+            $("#input3").val(localStorage.input3);
+            $("#input4").val(localStorage.input4);
+            $("#input5").val(localStorage.input5);
+
+            layui.use('table', function () {
+                var namestr = "table" + type;
+                var list = JSON.parse(localStorage.getItem(namestr));
+                if (list == null) { $("#table").html(""); return; }
+                for (var i = 0; i < list.length; i++) {
+                    list[i].ind = parseInt(i) + 1;
+                }          
+                var table = layui.table;
+                //第一个实例
+                table.render({
+                    elem: '#table'
+                    , id: 'TableList'
+                    , height: 500
+                    , data: list
+                    , url: '' //数据接口
+                    , page: true //开启分页
+                    , limit: 120
+                    , limits: [120]
+                    , initSort: {
+                        field: 'ind' //排序字段，对应 cols 设定的各字段名
+                        , type: 'desc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+                    }
+                    , cols: [[ //表头
+                        { field: 'ind', title: '序号', width: 120 }
+                        , { field: 'one', title: '数字', width: 120 }
+                        , { field: 'two', title: '排序', width: 120 }
+                        , { field: 'three', title: '正负', width: 120 }
+                        , { field: 'three', title: '操作', width: 120, templet: '#Temp' }
+                    ]]
+                });
+            });
+            RefeshPrecent();
+        })
+
+        $("#btnSaveModel").click(function () {
+            localStorage.input1 = $("#input1").val();
+            localStorage.input2 = $("#input2").val();
+            localStorage.input3 = $("#input3").val();
+            localStorage.input4 = $("#input4").val();
+            localStorage.input5 = $("#input5").val();
+            $('#input1').attr("disabled", true);
+            $('#input2').attr("disabled", true);
+            $('#input3').attr("disabled", true);
+            $('#input4').attr("disabled", true);
+            $('#input5').attr("disabled", true);
+            layer.msg('保存成功');
+        });
+
+        $("#btnEditModel").click(function () {
+            $('#input1').attr("disabled", false);
+            $('#input2').attr("disabled", false);
+            $('#input3').attr("disabled", false);
+            $('#input4').attr("disabled", false);
+            $('#input5').attr("disabled", false);
+        });
+
+        $("#btnClearModel").click(function () {
+            $("#input1").val("");
+            $("#input2").val("");
+            $("#input3").val("");
+            $("#input4").val("");
+            $("#input5").val("");
+            $('#input1').attr("disabled", false);
+            $('#input2').attr("disabled", false);
+            $('#input3').attr("disabled", false);
+            $('#input4').attr("disabled", false);
+            $('#input5').attr("disabled", false);
+        });
+        
+
+
+        $("#btnAdd").click(function () {
+            if (type == 0) {
+                layer.msg('请先选择位数'); return;
+            }
+            layer.open({
+                content: '<div class="layui-form-item">\
+                                            <label class="layui-form-label">输入数字</label>\
+                                            <div class="layui-input-block">\
+                                              <input type="text" id="nums" name="title" required  lay-verify="required" placeholder="建议一次填入10-30个" autocomplete="off" class="layui-input">\
+                                            </div>\
+                                          </div>',
+                btn: ['确定', '取消']
+                , yes: function (index, layero) {
+                    //判断当前表格是否有120条数据
+                    var tableList = JSON.parse(localStorage.getItem("table" + type));
+                    if (tableList == null) {
+                        tableList = [];
+                    }
+                    if (tableList.length>= 120) {
+                        layer.msg('当前表格数字已达到120个');
+                        return;
+                    }
+
+                    //判断当前模板有没有值
+                    var inputVal = $("#input" + type).val();
+                    if (inputVal == "") {
+                        layer.msg('请先设置模板');
+                        return;
+                    }
+
+                    //判断当前输入框的值是否符合规范
+                    var ids = $("#nums").val().trim();
+                    for (var i = 0; i < ids.length; i++) {
+                        if (parseFloat(ids[i]).toString() == "NaN") {
+                            layer.msg('输入数据有误');
+                            return false;
+                        }
+                    }
+
+                    if (tableList.length + ids.length > 120) {
+                        layer.msg('当前表格仅限输入' + (120 - tableList.length) + '个数字,您已经输入' + ids.length + '+个');
+                        return;
+                    }
+
+                    for (var i = 0; i < ids.length; i++) {
+                        if (ids[i] == "") { continue; }
+                        //获取模版
+                        var txt = $("#input" + type).val();
+                        //根据数字 获得排序
+                        var order = txt.indexOf(ids[i]) + 1;
+                        var isZ = order <= 7 ? 1 : -1;
+
+                        var model = {
+                            ind: -1,
+                            one: ids[i],
+                            two: order,
+                            three: isZ
+                        };
+                        tableList.push(model);
+                        var tableId = "table" + type;
+                        localStorage.setItem(tableId, JSON.stringify(tableList));
+                        //更新模板
+                        var newtxt = ids[i].toString() + txt.replace(ids[i].toString(), "").trim();
+                        $("#input" + type).val(newtxt);
+                        localStorage.setItem("input" + type, newtxt)
+                        //更新表格
+                        RefeshTable();                    
+                    }
+                    layer.close(index);
+                }
+                , btn2: function (index, layero) {
+                }
+            });
+        });
+
+        $(".tool ul li").click(function () {
+            type = $(".tool ul li").index(this) + 1;
+            $(this).addClass("layui-this").siblings().removeClass("layui-this");
+            RefeshTable();
+        });
+
+        //type为0 代表千位  以此类推
+        function RefeshTable() {
+            var table = layui.table;
+            var namestr = "table" + type;
+            var list = JSON.parse(localStorage.getItem(namestr));
+
+            if (list == null) {
+                table.reload('TableList', {
+                    data: list
+                });
+                return;
+            }
+            for (var i = 0; i < list.length; i++) {
+                list[i].ind = parseInt(i) + 1;
+            }       
+
+            //同时刷新 ind
+            var tableId = "table" + type;
+            localStorage.setItem(tableId, JSON.stringify(list));
+
+            table.reload('TableList', {
+                data:list
+            });
+            RefeshPrecent();
+        }
+
+        function edit(index) {
+            layer.confirm('删除此项 将清空下面全部关联数据', {
+                btn: ['确定', '取消'] //可以无限个按钮
+            }, function (layno, layero) {
+                var namestr = "table" + type;
+                var list = JSON.parse(localStorage.getItem(namestr));
+                var newList = list.slice(0, index-1);
+                localStorage.setItem(namestr, JSON.stringify(newList));
+                RefeshTable();
+                layer.close(layno);
+            }, function (index) {
+
+            });
+        }
+
+        $("#btnExport").click(function () {
+            var table1 = localStorage.getItem("table1");
+            var table2 = localStorage.getItem("table2");
+            var table3 = localStorage.getItem("table3");
+            var table4 = localStorage.getItem("table4");
+            var table5 = localStorage.getItem("table5");
+            if (table1 == null || table1 == "null" || table1.length == 0) { layer.msg("导出失败！ 请完善千位表格"); return; }
+            if (table2 == null || table2 == "null" || table2.length == 0) { layer.msg("导出失败！ 请完善百位表格"); return; }
+            if (table3 == null || table3 == "null" || table3.length == 0) { layer.msg("导出失败！ 请完善十位表格"); return; }
+            if (table4 == null || table4 == "null" || table4.length == 0) { layer.msg("导出失败！ 请完善个位表格"); return; }
+            if (table5 == null || table5 == "null" || table5.length == 0) { layer.msg("导出失败！ 请完善球五表格"); return; }
+            var tables =  {
+                table1: JSON.parse(table1),
+                table2: JSON.parse(table2),
+                table3: JSON.parse(table3),
+                table4: JSON.parse(table4),
+                table5: JSON.parse(table5),
+            };
+            var exportList = JSON.stringify(tables);
+            var res = Func_Export(exportList);
+            if (res == "true") {
+                layer.msg("导出成功！请到软件根目录查看数据表格");
+            }
+        });
+
+        $("#btnClear").click(function () {
+            layer.confirm('确定已导出到本地吗?此操作将清空所有数据表格', {
+                btn: ['确定', '取消'] //可以无限个按钮
+            }, function (layno, layero) {
+                localStorage.setItem("table1", null);
+                localStorage.setItem("table2", null);
+                localStorage.setItem("table3", null);
+                localStorage.setItem("table4", null);
+                localStorage.setItem("table5", null);
+                RefeshTable();
+                layer.close(layno);
+            }, function (index) {
+            });
+        });
+
+        function RefeshPrecent() {
+            var list1 = JSON.parse(localStorage.getItem("table1"));
+            var list2 = JSON.parse(localStorage.getItem("table2"));
+            var list3 = JSON.parse(localStorage.getItem("table3"));
+            var list4 = JSON.parse(localStorage.getItem("table4"));
+            var list5 = JSON.parse(localStorage.getItem("table5"));
+
+            if (list1 == null || list1.length == 0) { $(".precent1").html("0%");}
+            else {
+                var precent1 = 0;
+                for (var i = 0; i < list1.length; i++) {
+                    if (list1[i].three == 1) {
+                        precent1++;
+                    }
+                }
+                $(".precent1").html(GetPercent(precent1, list1.length));
+            }
+            if (list2 == null || list2.length == 0) { $(".precent2").html("0%");}
+            else { 
+                var precent2 = 0;
+                for (var i = 0; i < list2.length; i++) {
+                    if (list2[i].three == 1) {
+                        precent2++;
+                    }
+                }
+                $(".precent2").html(GetPercent(precent2, list2.length));
+            }
+
+            if (list3 == null || list3.length == 0) { $(".precent3").html("0%"); }
+            else { 
+                var precent3 = 0;
+                for (var i = 0; i < list3.length; i++) {
+                    if (list3[i].three == 1) {
+                        precent3++;
+                    }
+                }
+                $(".precent3").html(GetPercent(precent3, list3.length));
+            }
+
+            if (list4 == null || list4.length == 0) { $(".precent4").html("0%"); }
+            else { 
+                var precent4 = 0;
+                for (var i = 0; i < list4.length; i++) {
+                    if (list4[i].three == 1) {
+                        precent4++;
+                    }
+                }
+                $(".precent4").html(GetPercent(precent4, list4.length));
+            }
+
+            if (list5 == null || list5.length == 0) { $(".precent5").html("0%"); }
+            else {             
+                var precent5 = 0;
+                for (var i = 0; i < list5.length; i++) {
+                    if (list5[i].three == 1) {
+                        precent5++;
+                    }
+                }
+                $(".precent5").html(GetPercent(precent5,list5.length));
+            }                                                     
+        }
+
+        //计算两个整数的百分比值
+        function GetPercent(num, total) {
+            num = parseFloat(num);
+            total = parseFloat(total);
+            if (isNaN(num) || isNaN(total)) {
+                return "-";
+            }
+            return total <= 0 ? "0%" : (Math.round(num / total * 10000) / 100.00 + "%");
+        } 
+
+    </script>
+    <script type="text/html" id="Temp">
+        <button class="layui-btn layui-btn-primary btn-rowedit" onclick="edit({{d.ind}})">删除</button>
+    </script>
+</body>
+</html>

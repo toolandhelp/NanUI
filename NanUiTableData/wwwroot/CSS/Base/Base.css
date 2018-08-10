@@ -1,0 +1,36 @@
+﻿::-webkit-scrollbar{width:20px;height:20px;cursor:pointer;}
+::-webkit-scrollbar-track,::-webkit-scrollbar-thumb{border-radius:999px;border:5px solid transparent;cursor:pointer;}
+::-webkit-scrollbar-track{box-shadow:1px 1px 5px rgba(0,0,0,.2) inset;cursor:pointer;}
+::-webkit-scrollbar-thumb{min-height:20px;background-clip:content-box;box-shadow:0 0 0 5px rgba(0,0,0,.2) inset;cursor:pointer;}
+::-webkit-scrollbar-corner{background:transparent;cursor:pointer;}
+
+*{-webkit-user-select:none !important;padding:0;margin:0 auto;outline:none;border:none;font-family:"微软雅黑";}
+body{width:100%;height:100%;}
+input{cursor:text}
+.max{width:100%;}
+
+.icon{display:inline-block;width:30px;height:30px;}
+.icon-min-btn:before{content:url(/wwwroot/SVG/min-btn.svg)}
+.icon-close-btn:before{content:url(/wwwroot/SVG/close-btn.svg)}
+.icon-max-btn:before{content:url(/wwwroot/SVG/max-btn.svg)}
+.icon-normal-btn:before{content:url(/wwwroot/SVG/normal-btn.svg)}
+.icon-entTask:before{content:url(/wwwroot/SVG/entTask.svg)}
+.icon-view:before{content:url(/wwwroot/SVG/view.svg)}
+.icon-center:before{content:url(/wwwroot/SVG/center.svg)}
+.icon-fangdan:before{content:url(/wwwroot/SVG/fangdan.svg)}
+.icon-jiedan:before{content:url(/wwwroot/SVG/jiedan.svg)}
+.icon-help:before{content:url(/wwwroot/SVG/help.svg)}
+.icon-kefu:before{content:url(/wwwroot/SVG/kefu.svg)}
+.icon-zuijiin:before{content:url(/wwwroot/SVG/zuijiin.svg)}
+.icon-msg:before{content:url(/wwwroot/SVG/msg.svg)}
+
+.title{height:35px;position:fixed;top:0;left:0;z-index:1;-webkit-app-region:drag;background:#467FD3}
+.title > .left{display:inline-block;position:absolute;top:0;left:10px;height:35px;text-align:left;font-size:14px;color:#FFF;line-height:35px;}
+.title > .center{display:inline-block;position:absolute;top:0;left:0;right:0;margin:0 auto;height:35px;line-height:35px;text-align:center;font-size:14px;color:#FFF}
+.title > .right{display:inline-block;position:absolute;top:0;right:0;height:35px;text-align:left;font-size:14px;color:#757575;line-height:35px;color:#FFF;font-size:0}
+.title > .right > span{display:inline-block;width:35px;height:35px;text-align:center;line-height:35px;overflow:hidden;transition:.5s;-webkit-app-region:no-drag;}
+.title > .right > span:hover{background:#E56281}
+.title > .right .icon-min-btn,.title > .right .icon-close-btn{width:35px;height:35px;transform:scale(.7);line-height:35px;text-align:center;position:relative;top:5px;}
+.title > .right .icon-max-btn{width:35px;height:35px;transform:scale(.8);line-height:35px;text-align:center;position:relative;top:4px;}
+.title > .right .icon-normal-btn{width:35px;height:35px;line-height:35px;text-align:center;position:relative;top:4px;}
+.title > .right > span > i{cursor:pointer !important;}

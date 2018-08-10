@@ -1,0 +1,147 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>欢迎使用 - 主界面</title>
+    <link href="/wwwroot/CSS/Base/Base.css" rel="stylesheet" />
+    <link href="/wwwroot/CSS/Main.css" rel="stylesheet" />
+    <link href="/wwwroot/Lib/Layui/css/layui.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="title max">
+        <div class="left">
+            <label>欢迎使用XXX系统</label>
+        </div>
+        <div class="right">
+            <span onclick="minForm()"><i class="icon icon-min-btn"></i></span>
+            <span id="maxForm"><i class="icon icon-max-btn"></i></span>
+            <span id="normalForm" style="display:none"><i class="icon icon-normal-btn"></i></span>
+            <span onclick="closeForm()"><i class="icon icon-close-btn"></i></span>
+        </div>
+    </div>
+    <div style="width:100%;height:35px"></div>
+    <div id="main" class="max">
+        <div class="tool max">
+            <ul>
+                <li url="/wwwroot/Pages/Test.html">
+                    <i class="icon icon-entTask" style="transform:scale(.8)"></i>
+                    <label>发布任务</label>
+                </li>
+                <li url="/wwwroot/Pages/Test2.html">
+                    <i class="icon icon-view"></i>
+                    <label>浏览大厅</label>
+                </li>
+                <li>
+                    <i class="icon icon-center"></i>
+                    <label>会员中心</label>
+                </li>
+                <li>
+                    <i class="icon icon-fangdan"></i>
+                    <label>放单管理</label>
+                </li>
+                <li>
+                    <i class="icon icon-jiedan" style="transform: rotate(180deg);top:-2px;left:-5px"></i>
+                    <label>接单管理</label>
+                </li>
+                <li>
+                    <i class="icon icon-help"></i>
+                    <label>帮助中心</label>
+                </li>
+            </ul>
+        </div>
+        <div class="max content">
+            <div class="left" id="contetnLeft">
+                <iframe src="/wwwroot/Pages/Test.html" id="iframe"  frameborder="0" vspace="0" scrolling="yes"></iframe>
+            </div>
+            <div class="right">
+                <div class="top max">
+                    <div class="userInfo">
+                        <div class="row">
+                            <span>用户帐号: </span>
+                            <label>123456789</label>
+                        </div>
+                        <div class="row">
+                            <span>掌柜名称: </span>
+                            <label>习大大</label>
+                        </div>
+                        <div class="row">
+                            <span>小号名称: </span>
+                            <label>--</label>
+                        </div>
+                    </div>
+                    <div class="state">
+                        <span>接单状态: </span>
+                        <label>
+                            <select>
+                                <option value="0">暂不接单</option>
+                                <option value="1">我要接单</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="balance">
+                        <div class="row">
+                            <div class="left">
+                                <span>余额: </span>
+                                <label>0.00</label>
+                            </div>
+                            <div class="right">
+                                <span>会员级别: </span>
+                                <label>普通</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="left">
+                                <span>金豆: </span>
+                                <label>0</label>
+                            </div>
+                            <div class="right">
+                                <span>会员联盟: </span>
+                                <label>是</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="left">
+                                <span>经验: </span>
+                                <label>0</label>
+                            </div>
+                            <div class="right">
+                                <span>小号数量: </span>
+                                <label>0</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="left">
+                                <span>贡献: </span>
+                                <label>0</label>
+                            </div>
+                            <div class="right">
+                                <span>掌柜数量: </span>
+                                <label>0</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="im">
+                        <div class="select">
+                            <div>
+                                <i class="icon icon-kefu"></i>
+                                <label>官方客服</label>
+                            </div>
+                            <div>
+                                <i class="icon icon-zuijiin" style="transform:scale(.8)"></i>
+                                <label>最近聊天</label>
+                            </div>
+                            <div>
+                                <i class="icon icon-msg" style="transform:scale(.8)"></i>
+                                <label>聊天消息</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="/wwwroot/Lib/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="/wwwroot/Lib/Layui/layui.js"></script>
+    <script type="text/javascript" src="/wwwroot/Scripts/Main.js"></script>
+</body>
+</html>

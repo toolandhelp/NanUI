@@ -1,0 +1,24 @@
+﻿.layui-form-item{margin-bottom:6px !important;}
+.layui-input{height:30px !important;}
+.layui-form-checkbox{margin-right:0 !important}
+.layui-form-checkbox{margin-top:0 !important}
+
+#logo{height:140px;background:#467FD3;text-align:center;line-height:140px;-webkit-app-region:drag;}
+#logo img{width:120px;height:120px;}
+
+#form{font-size:0;position:relative}
+#form > div{display:inline-block;float:left;}
+#form .left{width:25%;text-align:right; height:1px;}
+#form .left img{width:80px;height:80px;}
+
+#form .center{width:50%;font-size:14px;margin-top:13px;}
+#form .center .layui-form .check{position:relative;height:30px;}
+#form .center .layui-form .check > div{position:absolute;}
+#form .center .layui-form .check > div:first-child{left:0;}
+#form .center .layui-form .check > div:last-child{right:0;}
+#form .center .layui-form .layui-form-item .layui-btn{width:100%;height:30px;line-height:30px;background:#5FB878}
+
+#form .right{width:25%;font-size:14px;margin-top:13px;}
+#form .right .layui-form-item{height:30px;line-height:30px;}
+#form .right .layui-form-item a{display:inline-block;margin-left:15px;cursor:pointer;font-size:13px;border:1px solid #FFF;width:70px;text-align:center}
+#form .right .layui-form-item a:hover{color:#467FD3;border:1px solid #CCC;border-radius:3px;}
