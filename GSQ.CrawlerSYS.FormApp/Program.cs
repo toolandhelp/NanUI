@@ -7,7 +7,6 @@ using System.Windows.Forms;
 namespace GSQ.CrawlerSYS.FormApp
 {
     using Chromium;
-    using GSQ.CrawlerSYS.FormApp;
     using NetDimension.NanUI;
     using System.Reflection;
     static class Program
@@ -38,8 +37,8 @@ namespace GSQ.CrawlerSYS.FormApp
             {
                 //注册嵌入资源，并为指定资源指定一个假的域名my.resource.local
                 Bootstrap.RegisterAssemblyResources(Assembly.GetExecutingAssembly(), "my.resource.local");
-                Login a = new Login();
-                a.Show();
+                Login login = new Login();
+                login.Show();
                 Application.Run();
             }
             else
