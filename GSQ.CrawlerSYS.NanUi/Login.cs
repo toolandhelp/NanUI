@@ -167,6 +167,9 @@ namespace GSQ.CrawlerSYS.NanUi
 
             if (UserModel!=null)
             {
+                //设置个人信息
+                //个人信息类  拓展
+
                 returnMessage.IsSuccess = true;
                 returnMessage.ErrorType = 1;
                 returnMessage.MessageContent = "登录成功";
