@@ -91,12 +91,22 @@
                 var str = my.Func_login("{\"Name\":\"" + d.field.account + "\",\"Pass\":\"" + $.md5(d.field.pwd) + "\",\"Code\":\"" + d.field.verificationcode + "\"}");
                 var result = eval('(' + str + ')');
                 if (result.isSuccess == true) {
-                    layer.msg('登陆成功');
+                    layer.msg(result.MessageContent);
                     setTimeout(function () {
                         viewMain();
                     }, 1000);
                 } else {
-                    layer.msg('登陆失败,密码错误');
+                    switch (result.ErrorType) {
+                        case 0:
+                            $("#verificationcode").val("");
+                            ClickValidateCode();
+                        // default: //2
+                        case 2:
+                            $("#verificationcode").val("");
+                          
+                    }
+                    layer.msg(result.MessageContent);
+                 
                 }
                 return false;
             });

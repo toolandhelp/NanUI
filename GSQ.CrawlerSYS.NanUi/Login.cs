@@ -150,12 +150,14 @@ namespace GSQ.CrawlerSYS.NanUi
 
             if (string.IsNullOrEmpty(code))
             {
+                returnMessage.ErrorType = 3;
                 returnMessage.MessageContent = "验证码不能为空";
                 return returnMessage;
             }
 
             if (code != Vcode)
             {
+                returnMessage.ErrorType = 2;
                 returnMessage.MessageContent = "验证码错误";
                 return returnMessage;
             }
@@ -172,6 +174,7 @@ namespace GSQ.CrawlerSYS.NanUi
             }
             else
             {
+                returnMessage.ErrorType = 0; //可有可无 构造方法已赋值
                 returnMessage.MessageContent = "账号密码错误";
                 return returnMessage;
             }
