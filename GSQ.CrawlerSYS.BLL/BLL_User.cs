@@ -18,6 +18,17 @@ namespace GSQ.CrawlerSYS.BLL
         #endregion
         #region  查询 Search Entity
 
+        /// <summary>
+        /// 登陆用户
+        /// </summary>
+        /// <param name="sUserName"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public t_User LoginUsers(string sUserName, string password)
+        {
+            return dbContext.SearchBySingle(c => c.UserName == sUserName && c.Pwd == password);
+        }
+
         ///// <summary>
         ///// 根据账号获取单条数据
         ///// </summary>

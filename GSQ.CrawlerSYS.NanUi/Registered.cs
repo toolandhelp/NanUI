@@ -33,14 +33,22 @@ namespace GSQ.CrawlerSYS.NanUi
             {
                 this.RequireUIThread(() =>
                 {
-                    //Application.Run(new Main());
-                    MessageBox.Show("确定取消注册?");
-
-                    this.DialogResult = DialogResult.OK;
+                    DialogResult dr = MessageBox.Show("确定取消注册？", "关闭提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                    if (dr == DialogResult.OK)
                     {
                         this.Close();
                         this.Dispose();
                     }
+                
+
+                    //Application.Run(new Main());
+                    //MessageBox.Show("确定取消注册?");
+
+                    //this.DialogResult = DialogResult.OK;
+                    //{
+                    //    this.Close();
+                    //    this.Dispose();
+                    //}
                     //this.Close();
                 });
             };

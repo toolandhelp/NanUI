@@ -12,17 +12,19 @@ namespace GSQ.CrawlerSYS.NanUi
 {
     using Chromium;
     using Chromium.Remote;
+    using GSQ.CrawlerSYS.BLL;
     using GSQ.CrawlerSYS.CommonLib;
+    using GSQ.CrawlerSYS.Model;
     using GSQ.CrawlerSYS.NanUi.Base;
     using NetDimension.NanUI;
     using Newtonsoft.Json.Linq;
 
-
+    //学习地址：https://www.cnblogs.com/MVC1013/p/8860990.html
 
     public partial class Login : BaseForm
     {
         private static Registered registered;
-
+        private static  string Vcode = "";
         public Login()
             : base(AnimationType.Center, "wwwroot/Pages/Login.html", false)
         {
@@ -89,7 +91,7 @@ namespace GSQ.CrawlerSYS.NanUi
             var nameProp = myObject.AddDynamicProperty("name");
             nameProp.PropertyGet += (prop, args) =>
             {
-                args.Retval = CfrV8Value.CreateString("NanUI");
+                args.Retval = CfrV8Value.CreateString("MyLogin");
                 args.SetReturnValue(true);
             };
             nameProp.PropertySet += (prop, args) =>
@@ -108,18 +110,27 @@ namespace GSQ.CrawlerSYS.NanUi
                 {
                     var str = stringArgument.StringValue;
                     JObject model = JObject.Parse(str);
-                    var name = model["Name"].ToString().ToLower();
-                    var pass = model["Pass"].ToString().ToLower();
-                    object result = null;
-                    if (name == "admin" && pass == "111111")
-                        result = new { isSuccess = true, msg = "登录成功" };
-                    else
-                        result = new { isSuccess = false, msg = "账号密码错误" };
 
-                    var resultStr = CfrV8Value.CreateString(Newtonsoft.Json.JsonConvert.SerializeObject(result));
+                    ReturnMessageModel returnMessage = LoginFun(model);
+
+
+                    var resultStr = CfrV8Value.CreateString(Newtonsoft.Json.JsonConvert.SerializeObject(returnMessage));
                     args.SetReturnValue(resultStr);
                 }
             };
+
+
+
+            //注册验证码到JS
+            base.GlobalObject.AddFunction("ClickValidateCode").Execute += (_, args) =>
+            {
+                string base64 = BaseImgCode();
+                ExecuteJavascript("ImgCode('data:image/jpg;base64," + base64 + "')");
+            };
+
+            //加载获取验证码
+            LoadHandler.OnLoadEnd += LoadValidaeCode;
+
 
             //google调试器
             base.LoadHandler.OnLoadStart += (sender, e) =>
@@ -127,26 +138,63 @@ namespace GSQ.CrawlerSYS.NanUi
                 base.Chromium.ShowDevTools();
             };
 
-
-            //注册验证码到JS
-            base.GlobalObject.AddFunction("ClickValidateCode").Execute += (_, args) =>
-            {
-
-                this.RequireUIThread(() =>
-                {
-                    var itemValidateCode = new CommonLib.ValidateCode();
-                    string code = itemValidateCode.CreateValidateCode(4);
-                  //  Session["CheckCode"] = code;
-                    byte[] bytes = itemValidateCode.CreateValidateGraphic(code);
-
-                   // return File(bytes, @"image/jpg");
-                });
-            };
-
-
         }
 
+        private ReturnMessageModel LoginFun(JObject model)
+        {
+            var name = model["Name"].ToString().ToLower();
+            var pass = model["Pass"].ToString().ToLower();
+            var code = model["Code"].ToString().ToLower();
 
+            ReturnMessageModel returnMessage = new ReturnMessageModel();
+
+            if (string.IsNullOrEmpty(code))
+            {
+                returnMessage.MessageContent = "验证码不能为空";
+                return returnMessage;
+            }
+
+            if (code != Vcode)
+            {
+                returnMessage.MessageContent = "验证码错误";
+                return returnMessage;
+            }
+            pass = CommonLib.HashEncrypt.BgPassWord(pass);
+            BLL_User userBll = new BLL_User();
+            var UserModel = userBll.LoginUsers(name,pass);
+
+            if (UserModel!=null)
+            {
+                returnMessage.IsSuccess = true;
+                returnMessage.ErrorType = 1;
+                returnMessage.MessageContent = "登录成功";
+                return returnMessage;
+            }
+            else
+            {
+                returnMessage.MessageContent = "账号密码错误";
+                return returnMessage;
+            }
+        }
+
+        private void LoadValidaeCode(object sender, Chromium.Event.CfxOnLoadEndEventArgs e)
+        {
+            string base64 = BaseImgCode();
+            ExecuteJavascript("ImgCode('data:image/jpg;base64," + base64 + "')");
+            // return File(bytes, @"image/jpg");
+        }
+
+        private static string BaseImgCode()
+        {
+            var itemValidateCode = new CommonLib.ValidateCode();
+            string code = itemValidateCode.CreateValidateCode(4);
+            //  Session["CheckCode"] = code;
+            Vcode = code;
+            byte[] bytes = itemValidateCode.CreateValidateGraphic(code);
+            string base64 = Convert.ToBase64String(bytes);
+            // return File(bytes, @"image/jpg");
+            return base64;
+        }
 
     }
 }

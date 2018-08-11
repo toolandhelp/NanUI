@@ -15,7 +15,7 @@
         </div>
         <div class="right">
             <!--<span n-ui-command="minimize"><i class="icon icon-min-btn"></i></span>
-        <span n-ui-command="close"><i class="icon icon-close-btn"></i></span>-->
+            <span n-ui-command="close"><i class="icon icon-close-btn"></i></span>-->
             <span onclick="minForm()"><i class="icon icon-min-btn"></i></span>
             <span onclick="closeForm()"><i class="icon icon-close-btn"></i></span>
         </div>
@@ -38,7 +38,7 @@
                 </div>
                 <div>
                     <div class="layui-form-item">
-                        <input type="text" name="verificationcode" id="verificationcode" required lay-verify="verificationcode" placeholder="请输入验证码" autocomplete="off" class="layui-input">
+                        <input type="text" name="verificationcode" id="verificationcode" required lay-verify="verificationcode" placeholder="请输入验证码" autocomplete="off" class="layui-input" maxlength="4">
                     </div>
                 </div>
                 <!--<div class="layui-form-item check">
@@ -46,7 +46,7 @@
                     <div><input type="checkbox" name="like[write]" title="自动登录"></div>
                 </div>-->
                 <div class="layui-form-item">
-                    <button class="layui-btn" lay-submit=""  lay-filter="login" >登录</button>
+                    <button class="layui-btn" lay-submit="" lay-filter="login">登录</button>
                 </div>
             </form>
         </div>
@@ -58,14 +58,16 @@
                 <a onclick="backPass()">找回密码</a>
             </div>
             <div class="layui-form-item">
-                <img src="" alt="看不清，换一张" title="看不清，换一张" id="signin-imgcode" style="cursor:pointer"/>
+                <img src="" alt="看不清，换一张" title="看不清，换一张" id="signin-imgcode" style="cursor:pointer;margin-left: 27px;" />
             </div>
         </div>
     </div>
     <script type="text/javascript" src="/wwwroot/Lib/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="/wwwroot/Lib/md5/jquery.md5.js"></script>
     <script type="text/javascript" src="/wwwroot/Lib/Layui/layui.js"></script>
     <script type="text/javascript" src="/wwwroot/Scripts/Base/Base.js"></script>
     <script type="text/javascript" src="/wwwroot/Scripts/Login.js"></script>
+
     <script>
 
         layui.use(['layer', 'form'], function () {
@@ -77,10 +79,16 @@
                         return '登录帐号长度在5 - 16之间';
                     }
                 },
-                pass: [/(.+){6,16}$/, '密码必须6到16位']
+                pass: [/(.+){6,16}$/, '密码必须6到16位'],
+                //verificationcode: [/^\s+|\s+$/,'请输入验证码']
+                verificationcode: function (value) {
+                    if (value.length = 0 || value == "") {
+                        return '请输入验证码';
+                    }
+                }
             });
             form.on('submit(login)', function (d) {
-                var str = my.Func_login("{\"Name\":\"" + d.field.account + "\",\"Pass\":\"" + d.field.pwd + "\"}");
+                var str = my.Func_login("{\"Name\":\"" + d.field.account + "\",\"Pass\":\"" + $.md5(d.field.pwd) + "\",\"Code\":\"" + d.field.verificationcode + "\"}");
                 var result = eval('(' + str + ')');
                 if (result.isSuccess == true) {
                     layer.msg('登陆成功');
@@ -95,16 +103,17 @@
         });
 
         function backPass() {
-            alert("未完成此功能");
+            alert("未提供此功能");
         }
 
         $("#signin-imgcode").click(function () { ClickValidateCode(); }).click();
 
         //验证码
-        function ClickValidateCode() {
-            $("#verificationcode").val("");
-            $("#signin-imgcode").prop('src', '/Login/CodeImg?_r=' + Math.random());
+        function ImgCode(base64) {
+            console.log(base64)
+            $("#signin-imgcode").prop('src', base64)
         }
+
 
 
     </script>

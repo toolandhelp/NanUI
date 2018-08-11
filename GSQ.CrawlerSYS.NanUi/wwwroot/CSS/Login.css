@@ -4,7 +4,7 @@
 .layui-form-checkbox{margin-top:0 !important}
 
 #logo{height:140px;background:#467FD3;text-align:center;line-height:140px;-webkit-app-region:drag;}
-#logo img{width:120px;height:120px;}
+#logo img{/*width:120px;*/height:120px;}
 
 #form{font-size:0;position:relative}
 #form > div{display:inline-block;float:left;}

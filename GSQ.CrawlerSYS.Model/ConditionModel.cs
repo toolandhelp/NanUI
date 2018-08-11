@@ -12,12 +12,16 @@ namespace GSQ.CrawlerSYS.Model
     /// </summary>
     public class ReturnMessageModel
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public ReturnMessageModel()
         {
+            IsSuccess = false;
             ErrorType = 0;
             MessageContent = "";
         }
-
+        public bool IsSuccess { get; set; }
         /// <summary>
         /// <para>错误类型 错误0-5系统预定 其它为自定义错误</para>
         /// <para>0错误 1成功 2请求地址不正确 3未登录 4无页面权限 5无操作权限</para>

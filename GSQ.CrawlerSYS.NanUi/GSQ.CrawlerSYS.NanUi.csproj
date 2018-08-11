@@ -157,6 +157,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="wwwroot\Lib\md5\jquery.md5.js" />
     <EmbeddedResource Include="wwwroot\Pages\Main.html" />
     <EmbeddedResource Include="wwwroot\CSS\Base\Base.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
