@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>登录页面</title>
+    <link href="/wwwroot/CSS/Base/Base.css" rel="stylesheet" />
+    <link href="/wwwroot/CSS/Login.css" rel="stylesheet" />
+    <link href="/wwwroot/Lib/Layui/css/layui.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="container" style="width:100%;height:160px;position:fixed;"><div id="anitOut"></div> </div>
+    <div class="title max">
+        <div class="left">
+            <label>用户登录</label>
+        </div>
+        <div class="right">
+            <!--<span n-ui-command="minimize"><i class="icon icon-min-btn"></i></span>
+        <span n-ui-command="close"><i class="icon icon-close-btn"></i></span>-->
+            <span onclick="minForm()"><i class="icon icon-min-btn"></i></span>
+            <span onclick="closeForm()"><i class="icon icon-close-btn"></i></span>
+        </div>
+    </div>
+    <div style="width:100%;height:35px"></div>
+    <div id="logo" class="max">
+        <img src="/wwwroot/Images/spider.png" draggable="false" />
+    </div>
+    <div id="form" class="max">
+        <div class="left">
+            <!--<img draggable="false" src="/wwwroot/Images/logo.png" />-->
+        </div>
+        <div class="center">
+            <form class="layui-form">
+                <div class="layui-form-item">
+                    <input type="text" name="account" required lay-verify="account" placeholder="请输入登录帐号" autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-form-item">
+                    <input type="password" name="pwd" required lay-verify="pass" placeholder="请输入登录密码" autocomplete="off" class="layui-input">
+                </div>
+                <div>
+                    <div class="layui-form-item">
+                        <input type="text" name="verificationcode" id="verificationcode" required lay-verify="verificationcode" placeholder="请输入验证码" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <!--<div class="layui-form-item check">
+                    <div><input type="checkbox" name="like[write]" title="记住密码"></div>
+                    <div><input type="checkbox" name="like[write]" title="自动登录"></div>
+                </div>-->
+                <div class="layui-form-item">
+                    <button class="layui-btn" lay-submit=""  lay-filter="login" >登录</button>
+                </div>
+            </form>
+        </div>
+        <div class="right">
+            <div class="layui-form-item">
+                <a onclick="showRegistered()">用户注册</a>
+            </div>
+            <div class="layui-form-item">
+                <a onclick="backPass()">找回密码</a>
+            </div>
+            <div class="layui-form-item">
+                <img src="" alt="看不清，换一张" title="看不清，换一张" id="signin-imgcode" style="cursor:pointer"/>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="/wwwroot/Lib/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="/wwwroot/Lib/Layui/layui.js"></script>
+    <script type="text/javascript" src="/wwwroot/Scripts/Base/Base.js"></script>
+    <script type="text/javascript" src="/wwwroot/Scripts/Login.js"></script>
+    <script>
+
+        layui.use(['layer', 'form'], function () {
+            var layer = layui.layer
+                , form = layui.form;
+            form.verify({
+                account: function (value) {
+                    if (value.length < 5 || value.length > 16) {
+                        return '登录帐号长度在5 - 16之间';
+                    }
+                },
+                pass: [/(.+){6,16}$/, '密码必须6到16位']
+            });
+            form.on('submit(login)', function (d) {
+                var str = my.Func_login("{\"Name\":\"" + d.field.account + "\",\"Pass\":\"" + d.field.pwd + "\"}");
+                var result = eval('(' + str + ')');
+                if (result.isSuccess == true) {
+                    layer.msg('登陆成功');
+                    setTimeout(function () {
+                        viewMain();
+                    }, 1000);
+                } else {
+                    layer.msg('登陆失败,密码错误');
+                }
+                return false;
+            });
+        });
+
+        function backPass() {
+            alert("未完成此功能");
+        }
+
+        $("#signin-imgcode").click(function () { ClickValidateCode(); }).click();
+
+        //验证码
+        function ClickValidateCode() {
+            $("#verificationcode").val("");
+            $("#signin-imgcode").prop('src', '/Login/CodeImg?_r=' + Math.random());
+        }
+
+
+    </script>
+
+
+
+</body>
+</html>
